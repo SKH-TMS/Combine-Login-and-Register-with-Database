@@ -1,0 +1,6 @@
+dark blue #3e4e50
+light red #a30f31
+dark red #5c091c
+dark green #3a7b37
+more dark green #183418
+dark grey-->black #1d1e1e
