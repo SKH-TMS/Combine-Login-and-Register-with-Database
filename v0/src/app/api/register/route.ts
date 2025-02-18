@@ -25,6 +25,8 @@ export async function POST(req: Request) {
     console.error("Registration error:", error);
     return NextResponse.json({ success: false, message: "Failed to register" });
   } finally {
+    
+
     // Close the MongoDB connection
     await client.close();
   }
