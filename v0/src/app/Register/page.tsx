@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Updated import for Next 13+
+
 interface UserData {
   firstName: string;
   lastName: string;
@@ -113,6 +115,8 @@ export default function Register() {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [contactError, setContactError] = useState(""); // Error for optional contact field
 
+  const router = useRouter(); // Initialize the router
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -130,145 +134,175 @@ export default function Register() {
     // Validating email
     const reg_email = sanitizeInput(email); // Removing fake/virus input
     if (reg_email === "") {
-        setGeneralError("Please enter all required information in correct format");
-        setEmailError("Please enter an email");
-        allValid = false;
+      setGeneralError(
+        "Please enter all required information in correct format"
+      );
+      setEmailError("Please enter an email");
+      allValid = false;
     } else {
-        const valid_email_check = regEmailTest(reg_email);
-        if (valid_email_check === 0) {
-            setGeneralError("Please enter all required information in correct format");
-            setEmailError("Please enter a valid email address");
-            allValid = false;
-        }
-        const character_allow = characterLengthValidator(reg_email, 45);
-        if (character_allow === 0) {
-            setGeneralError("Please enter all required information in correct format");
-            setEmailError("Too many characters in email address");
-            allValid = false;
-        }
+      const valid_email_check = regEmailTest(reg_email);
+      if (valid_email_check === 0) {
+        setGeneralError(
+          "Please enter all required information in correct format"
+        );
+        setEmailError("Please enter a valid email address");
+        allValid = false;
+      }
+      const character_allow = characterLengthValidator(reg_email, 45);
+      if (character_allow === 0) {
+        setGeneralError(
+          "Please enter all required information in correct format"
+        );
+        setEmailError("Too many characters in email address");
+        allValid = false;
+      }
     }
 
     // Validating password
     const regPassword = sanitizeInput(password); // Removing fake/virus input
     if (regPassword === "") {
-        setGeneralError("Please enter all required information in correct format");
-        setPasswordError("Please enter a password");
-        allValid = false;
+      setGeneralError(
+        "Please enter all required information in correct format"
+      );
+      setPasswordError("Please enter a password");
+      allValid = false;
     } else {
-        const validPasswordCheck = regPasswordTest(regPassword);
-        if (validPasswordCheck === 0) {
-            setGeneralError("Please enter all required information in correct format");
-            setPasswordError("Please enter a valid password");
-            allValid = false;
-        }
-        const characterAllow = characterLengthValidator(regPassword, 45);
-        if (characterAllow === 0) {
-            setGeneralError("Please enter all required information in correct format");
-            setPasswordError("Too many characters in password");
-            allValid = false;
-        }
+      const validPasswordCheck = regPasswordTest(regPassword);
+      if (validPasswordCheck === 0) {
+        setGeneralError(
+          "Please enter all required information in correct format"
+        );
+        setPasswordError("Please enter a valid password");
+        allValid = false;
+      }
+      const characterAllow = characterLengthValidator(regPassword, 45);
+      if (characterAllow === 0) {
+        setGeneralError(
+          "Please enter all required information in correct format"
+        );
+        setPasswordError("Too many characters in password");
+        allValid = false;
+      }
     }
 
     // Validating confirm password
     const retypePassword = sanitizeInput(confirmPassword); // Removing fake/virus input
     if (retypePassword !== regPassword) {
-        setGeneralError("Please enter all required information in correct format");
-        setConfirmPasswordError("Both passwords are not the same");
-        allValid = false;
+      setGeneralError(
+        "Please enter all required information in correct format"
+      );
+      setConfirmPasswordError("Both passwords are not the same");
+      allValid = false;
     }
 
     // Validating first name
     const first_name = sanitizeInput(firstName); // Removing fake/virus input
     if (first_name === "") {
-        setGeneralError("Please enter all required information in correct format");
-        setFirstNameError("Please enter a First Name");
-        allValid = false;
+      setGeneralError(
+        "Please enter all required information in correct format"
+      );
+      setFirstNameError("Please enter a First Name");
+      allValid = false;
     } else {
-        const valid_first_name = nameValidator(first_name);
-        if (valid_first_name === 0) {
-            setGeneralError("Please enter all required information in correct format");
-            setFirstNameError("Please enter a valid First Name");
-            allValid = false;
-        }
-        const characterAllow = characterLengthValidator(first_name, 20);
-        if (characterAllow === 0) {
-            setGeneralError("Please enter all required information in correct format");
-            setFirstNameError("Too many characters in First Name");
-            allValid = false;
-        }
+      const valid_first_name = nameValidator(first_name);
+      if (valid_first_name === 0) {
+        setGeneralError(
+          "Please enter all required information in correct format"
+        );
+        setFirstNameError("Please enter a valid First Name");
+        allValid = false;
+      }
+      const characterAllow = characterLengthValidator(first_name, 20);
+      if (characterAllow === 0) {
+        setGeneralError(
+          "Please enter all required information in correct format"
+        );
+        setFirstNameError("Too many characters in First Name");
+        allValid = false;
+      }
     }
 
     // Validating last name
     const last_name = sanitizeInput(lastName); // Removing fake/virus input
     if (last_name === "") {
-        setGeneralError("Please enter all required information in correct format");
-        setLastNameError("Please enter a Last Name");
-        allValid = false;
+      setGeneralError(
+        "Please enter all required information in correct format"
+      );
+      setLastNameError("Please enter a Last Name");
+      allValid = false;
     } else {
-        const valid_last_name = nameValidator(last_name);
-        if (valid_last_name === 0) {
-            setGeneralError("Please enter all required information in correct format");
-            setLastNameError("Please enter a valid Last Name");
-            allValid = false;
-        }
-        const characterAllow = characterLengthValidator(last_name, 20);
-        if (characterAllow === 0) {
-            setGeneralError("Please enter all required information in correct format");
-            setLastNameError("Too many characters in Last Name");
-            allValid = false;
-        }
+      const valid_last_name = nameValidator(last_name);
+      if (valid_last_name === 0) {
+        setGeneralError(
+          "Please enter all required information in correct format"
+        );
+        setLastNameError("Please enter a valid Last Name");
+        allValid = false;
+      }
+      const characterAllow = characterLengthValidator(last_name, 20);
+      if (characterAllow === 0) {
+        setGeneralError(
+          "Please enter all required information in correct format"
+        );
+        setLastNameError("Too many characters in Last Name");
+        allValid = false;
+      }
     }
 
     // Validating contact number
     const contact_number = sanitizeInput(contact); // Removing fake/virus input
     if (contact_number !== "") {
-        const characterAllow = characterLengthValidator(contact_number, 20);
-        if (characterAllow === 0) {
-            setGeneralError("Please enter all required information in correct format");
-            setContactError("Too many characters in Contact Number");
-            allValid = false;
-        }
+      const characterAllow = characterLengthValidator(contact_number, 20);
+      if (characterAllow === 0) {
+        setGeneralError(
+          "Please enter all required information in correct format"
+        );
+        setContactError("Too many characters in Contact Number");
+        allValid = false;
+      }
     }
 
     // If all validations pass, proceed with registration
     if (allValid) {
-        alert("Validation passed! Now you can proceed with registration.");
+      alert("Validation passed! Now you can proceed with registration.");
 
-        // Create user data object
-        const userData: UserData = {
-            firstName: first_name,
-            lastName: last_name,
-            email: reg_email,
-            password: regPassword,
-            contact: contact_number,
-        };
+      // Create user data object
+      const userData: UserData = {
+        firstName: first_name,
+        lastName: last_name,
+        email: reg_email,
+        password: regPassword,
+        contact: contact_number,
+      };
 
-        // Send registration request
-        try {
-          const response = await fetch('/api/register', {
-            
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userData),
+      // Send registration request
+      try {
+        const response = await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
         });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                setGeneralError(errorData.message || "Registration failed.");
-                return;
-            }
-            
-            const result = await response.json();
-            alert("Registration successful!");
-            // Handle success (e.g., redirect or clear form)
-        } catch (error) {
-            setGeneralError("An error occurred during registration. Please try again.");
+        if (!response.ok) {
+          const errorData = await response.json();
+          setGeneralError(errorData.message || "Registration failed.");
+          return;
         }
-    }
-};
 
+        const result = await response.json();
+        alert("Registration successful!");
+        // Handle success (e.g., redirect or clear form)
+        // Redirect to Profile page on successful login
+        router.push("/Profile"); // This redirects the user to the profile page
+      } catch (error) {
+        setGeneralError(
+          "An error occurred during registration. Please try again."
+        );
+      }
+    }
+  };
 
   return (
     <div className="screenMiddleDiv">
